@@ -152,10 +152,11 @@
             // 
             // buttonCalcul
             // 
-            this.buttonCalcul.Location = new System.Drawing.Point(272, 9);
+            this.buttonCalcul.Enabled = false;
+            this.buttonCalcul.Location = new System.Drawing.Point(226, 9);
             this.buttonCalcul.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCalcul.Name = "buttonCalcul";
-            this.buttonCalcul.Size = new System.Drawing.Size(82, 22);
+            this.buttonCalcul.Size = new System.Drawing.Size(128, 22);
             this.buttonCalcul.TabIndex = 11;
             this.buttonCalcul.Text = "Calculer";
             this.buttonCalcul.UseVisualStyleBackColor = true;

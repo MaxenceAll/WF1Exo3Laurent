@@ -1,11 +1,13 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WF1
 {
     public partial class FormExo3 : Form
     {
-        private List<int> notes = new List<int>();
-        //int[] notes = new int[99];
+        private List<double> notes = new List<double>();
+        
         public FormExo3()
         {
             InitializeComponent();
@@ -62,31 +64,33 @@ namespace WF1
             newTextBox.Location = new System.Drawing.Point(x, y);
             newTextBox.Size = new System.Drawing.Size(33, 27);
             newTextBox.TabIndex = index;
+            newTextBox.MaxLength = 5;
             panelNotes.Controls.Add(newTextBox);
-            newTextBox.TextChanged += NewTextBox_TextChanged;
-            notes.Add(0);
+            newTextBox.TextChanged += NewTextBox_TextChanged;            
+            notes.Add(Convert.ToDouble(-1));
+            //buttonCalcul.Enabled = false;
+            newTextBox.Text = Convert.ToString(-1);
+            verifsSaisie();
         }
 
         private void NewTextBox_TextChanged(object? sender, EventArgs e)
         {
-            int number;
+            double number;
             int index = panelNotes.Controls.IndexOf((TextBox)sender);
-            TextBox currentTextBox = (TextBox)panelNotes.Controls[index];
-  
-            if ( Int32.TryParse(currentTextBox.Text, out number) )
+            TextBox currentTextBox = (TextBox)panelNotes.Controls[index];  
+
+            if ( Double.TryParse(currentTextBox.Text, out number) )
             {
                 notes[index] = number;
             }
-
-            textBoxMax.Text = Convert.ToString(notes.Max());
-            textBoxMin.Text = Convert.ToString(notes.Min());
-            textBoxMoy.Text = Convert.ToString(notes.Average());
+            verifsSaisie();
         }
 
         private void removeTextBoxNote()
         {
             panelNotes.Controls.RemoveAt(NotesQty);
             notes.RemoveAt(notes.Count -1);
+            verifsSaisie();
         }
 
         private void buttonCalcul_Click(object sender, EventArgs e)
@@ -94,8 +98,51 @@ namespace WF1
             textBoxMax.Text = Convert.ToString(notes.Max());
             textBoxMin.Text = Convert.ToString(notes.Min());
             textBoxMoy.Text = Convert.ToString(notes.Average());
-            bool bp = true;
         }
+
+        private void verifsSaisie()
+        {
+            bool valide = false;
+            for (int i = 0; i < notes.Count; i++)
+            {
+                
+
+                if (notes[i] <= 20 && notes[i] >= 0)
+                {
+
+                    valide= true;
+                }
+                else
+                {
+
+                    valide= false;
+                }
+            }
+            /*
+            //Regex rx = new Regex(@"[0 - 9]{1,3}[,]*[0 - 9]{0,2}");
+            //Regex rx = new Regex(@".{0,1}");
+            Regex rx = new Regex(@"^\d{1,3}(\.\d{0,2})?$");
+            foreach (double test in notes)
+            {
+                if (rx.IsMatch(Convert.ToString(test)))
+                    return false;
+                else
+                    return true;
+            }
+            */
+            if (valide)
+            {
+                buttonCalcul.Text = "Calculer";
+                buttonCalcul.Enabled = true;
+            }
+            else
+            {
+                buttonCalcul.Text = "Vérifiez saisie";
+                buttonCalcul.Enabled = false;
+            }
+        }
+
+
 
         // Exo 3
 
