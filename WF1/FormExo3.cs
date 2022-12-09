@@ -64,7 +64,7 @@ namespace WF1
             newTextBox.Location = new System.Drawing.Point(x, y);
             newTextBox.Size = new System.Drawing.Size(33, 27);
             newTextBox.TabIndex = index;
-            newTextBox.MaxLength = 5;
+            //newTextBox.MaxLength = 5;
             panelNotes.Controls.Add(newTextBox);
             newTextBox.TextChanged += NewTextBox_TextChanged;            
             notes.Add(Convert.ToDouble(-1));
@@ -81,7 +81,7 @@ namespace WF1
 
             if ( Double.TryParse(currentTextBox.Text, out number) )
             {
-                notes[index] = number;
+                notes[index] = number;               
             }
             verifsSaisie();
         }
@@ -105,40 +105,34 @@ namespace WF1
             bool valide = false;
             for (int i = 0; i < notes.Count; i++)
             {
-                
-
                 if (notes[i] <= 20 && notes[i] >= 0)
                 {
-
-                    valide= true;
+                    valide = true;
+                    if (Double.Round(notes[i], 2) != notes[i])
+                    {
+                        valide = false;
+                    }
                 }
                 else
                 {
-
-                    valide= false;
+                    valide = false;
                 }
+
             }
             /*
             //Regex rx = new Regex(@"[0 - 9]{1,3}[,]*[0 - 9]{0,2}");
             //Regex rx = new Regex(@".{0,1}");
-            Regex rx = new Regex(@"^\d{1,3}(\.\d{0,2})?$");
-            foreach (double test in notes)
-            {
-                if (rx.IsMatch(Convert.ToString(test)))
-                    return false;
-                else
-                    return true;
-            }
+            //Regex rx = new Regex(@"^\d{1,3}(\.\d{0,2})?$");
             */
-            if (valide)
+            if (valide) 
             {
                 buttonCalcul.Text = "Calculer";
-                buttonCalcul.Enabled = true;
+                buttonCalcul.Enabled = true;          
             }
-            else
+            else        
             {
                 buttonCalcul.Text = "Vérifiez saisie";
-                buttonCalcul.Enabled = false;
+                buttonCalcul.Enabled = false; 
             }
         }
 
